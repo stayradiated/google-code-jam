@@ -1,10 +1,10 @@
 import { createSolver } from './utils'
 
 const classic = createSolver((L, R) => {
-  let i = 1
+  let i = BigInt(1)
   while (true) {
     if (L < i && R < i) {
-      return [i - 1, L, R]
+      return [i - BigInt(1), L, R]
     }
 
     if (L > R || L === R) {
@@ -13,7 +13,7 @@ const classic = createSolver((L, R) => {
       R -= i
     }
 
-    i += 1
+    i += BigInt(1)
   }
 })
 

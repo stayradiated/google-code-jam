@@ -11,9 +11,9 @@ import {
   sumOdd,
 } from './utils'
 
-export const quickBalance = (L: number, R: number) => {
+export const quickBalance = (L: bigint, R: bigint) => {
   if (L === R) {
-    return { i: 0, L, R }
+    return { i: BigInt(0), L, R }
   }
 
   const diff = L > R ? L - R : R - L
@@ -35,7 +35,7 @@ const solver = createSolver((lIn, rIn) => {
   const { i, L, R } = quickBalance(lIn, rIn)
 
   const [Even, Odd, TEven] =
-    i % 2 === 0
+    i % BigInt(2) === BigInt(0)
       ? R > L
         ? [L, R, 'L']
         : [R, L, 'R']
@@ -58,7 +58,7 @@ const solver = createSolver((lIn, rIn) => {
     target: Even,
   })
 
-  const iOut = 2 * i + odd.i + even.i
+  const iOut = BigInt(2) * i + odd.i + even.i
   const lOut = L - (TEven === 'L' ? even.value : odd.value)
   const rOut = R - (TEven === 'R' ? even.value : odd.value)
 

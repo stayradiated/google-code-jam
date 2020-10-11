@@ -1,11 +1,11 @@
-export type TransformFn = (i: number) => number
-export type HeuristicFn = (i: number) => number
+export type TransformFn = (i: bigint) => bigint
+export type HeuristicFn = (i: bigint) => bigint
 
 interface FindBestMatchOptions {
   heuristic: HeuristicFn,
   transform: TransformFn,
-  target: number,
-  maxAttempts?: number,
+  target: bigint,
+  maxAttempts?: bigint,
 }
 
 export const findBestMatch = (options: FindBestMatchOptions) => {
@@ -17,16 +17,20 @@ export const findBestMatch = (options: FindBestMatchOptions) => {
   let i = heuristic(target)
   let value = transform(i)
   if (value === target) {
-    return { i, value, attempts: 0 }
+    return { i, value, attempts: BigInt(0) }
   }
 
-  for (let attempts = 1; attempts <= maxAttempts; attempts += 1) {
+  for (
+    let attempts = BigInt(1);
+    attempts <= maxAttempts;
+    attempts += BigInt(1)
+  ) {
     if (value > target) {
       upperBound = i
-      i -= 1
+      i -= BigInt(1)
     } else if (value < target) {
       lowerBound = i
-      i += 1
+      i += BigInt(1)
     }
 
     value = transform(i)
@@ -46,41 +50,41 @@ export const findBestMatch = (options: FindBestMatchOptions) => {
 }
 
 export const sumAll: TransformFn = (i) => {
-  return (i * (i + 1)) / 2
+  return (i * (i + BigInt(1))) / BigInt(2)
 }
 
 export const revSumAll: HeuristicFn = (n) => {
-  return Math.floor(Math.sqrt(n * 2))
+  return BigInt(Math.floor(Math.sqrt(Number(n * BigInt(2)))))
 }
 
 export const sumOdd: TransformFn = (i) => {
-  return i ** 2
+  return i ** BigInt(2)
 }
 export const revSumOdd: HeuristicFn = (n) => {
-  return Math.floor(Math.sqrt(n))
+  return BigInt(Math.floor(Math.sqrt(Number(n))))
 }
 
 export const sumEven: TransformFn = (i) => {
-  return i * (i + 1)
+  return i * (i + BigInt(1))
 }
 export const revSumEven: HeuristicFn = (n) => {
-  return Math.floor(Math.sqrt(n))
+  return BigInt(Math.floor(Math.sqrt(Number(n))))
 }
 
 export const countOdd: TransformFn = (n) => {
-  return Math.ceil(n / 2)
+  return n / BigInt(2) + (n % BigInt(2))
 }
 
 export const countEven: TransformFn = (n) => {
-  return Math.floor(n / 2)
+  return n / BigInt(2)
 }
 
-type Solver = (L: number, R: number) => [number, number, number]
+type Solver = (L: bigint, R: bigint) => [bigint, bigint, bigint]
 
 export const createSolver = (solver: Solver) => (input: string) => {
   const strings = input.split(' ')
-  const lIn = parseInt(strings[0], 10)
-  const rIn = parseInt(strings[1], 10)
+  const lIn = BigInt(strings[0])
+  const rIn = BigInt(strings[1])
 
   const [i, lOut, rOut] = solver(lIn, rIn)
 
