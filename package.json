@@ -1,0 +1,19 @@
+{
+  "name": "@stayradiated/google-code-jam",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "author": "George Czabania <george@czabania.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "pkg-build",
+    "tidy": "pkg-tidy",
+    "test": "pkg-test",
+    "rollup": "pkg-build && rollup -c ./rollup.config.js"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "15.1.0",
+    "@rollup/plugin-node-resolve": "9.0.0",
+    "@stayradiated/pkg": "4.4.0",
+    "rollup": "2.29.0"
+  }
+}
